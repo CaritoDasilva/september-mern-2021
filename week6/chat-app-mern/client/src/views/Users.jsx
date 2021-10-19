@@ -63,7 +63,7 @@ const Users = () => {
     useEffect(() => {
         setTimeout(function () { 
             getAllUsers();
-        }, 3000);
+        }, 1000);
         
     }, []);
 
@@ -95,7 +95,7 @@ const Users = () => {
                     </table> */}
                 </div>
             ): 
-                (<Spin indicator = { antIcon } />)
+                (<Spin indicator = { antIcon } className="spinner" />)
             }
            
         </div>
