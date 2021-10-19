@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import styles from './Profile.module.scss';
 
 const Profile = () => {
     const { id, greet } = useParams();
@@ -25,7 +26,10 @@ const Profile = () => {
     return (
         <div>
             <h1>¡Hola soy {user?.fullName}!</h1>
-            <img src={user?.profile_pic} alt="" />
+            <div className={styles.imgContainer}>
+                <img src={user?.profile_pic} alt="" />
+
+            </div>
             <h3>Mi edad es {user?.age}</h3>
             <h1>{greet}</h1>
         </div>

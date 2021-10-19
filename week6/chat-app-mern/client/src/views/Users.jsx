@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Tag, Space, Spin } from 'antd';
-import { CheckCircleTwoTone, LoadingOutlined } from '@ant-design/icons';
+import { Table, Space, Spin, Button } from 'antd';
+import { CheckCircleTwoTone, LoadingOutlined, CloseSquareTwoTone } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 
 const Users = () => {
@@ -13,13 +13,13 @@ const Users = () => {
             title: 'Nombre',
             dataIndex: 'name',
             key: 'name',
-            render: profileInfo => <Link to={`/user/${profileInfo[1]}`}>Soy {profileInfo[0]}</Link>
+            render: (text, record) => <Link to={`/user/${record.key}`}>{record.name}</Link>
         },
         {
             title: 'Conectado',
             dataIndex: 'isOnline',
             key: 'isOnline',
-            render: isOnline => <CheckCircleTwoTone twoToneColor="#52c41a" className="onlineIcon" />
+            render: isOnline => isOnline ? <CheckCircleTwoTone twoToneColor="#52c41a" className="onlineIcon" style={{ fontSize: 40 }} /> : <CloseSquareTwoTone twoToneColor="#ff1744" style={{ fontSize: 40 }} />
         },
         {
             title: 'Foto Perfil',
@@ -27,12 +27,21 @@ const Users = () => {
             key: 'profile_pic',
             render: pic => <img src={pic} alt="" />
         },
+        {
+            title: 'Acciones',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (text, record) => <Space size="middle">
+                    <Button>Eliminar</Button>
+                    <Button>Editar</Button>
+                </Space>
+        },
     ];
 
     const data = usersList?.map(user => (
         {
             key: user._id,
-            name: [user.fullName, user._id],
+            name: user.fullName,
             isOnline: user.isOnline,
             profile_pic: user.profile_pic,
         }
@@ -62,10 +71,9 @@ const Users = () => {
         <div>
             {!isLoading ? (
                 <div>
-
                     <h1>Lista de Usuarios</h1>
-             
-                    <table>
+                    <Table columns={columns} dataSource={data}  />
+                    {/* <table>
                         <tr>
                             <th>Nombre</th>
                             <th>Status</th>
@@ -84,7 +92,7 @@ const Users = () => {
                                 </tr>
                             ))}
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
             ): 
                 (<Spin indicator = { antIcon } />)
