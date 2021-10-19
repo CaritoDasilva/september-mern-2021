@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,6 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import Login from './views/Login';
+import Users from './views/Users';
+import Profile from './views/Profile';
 
 function App() {
   return (
@@ -15,6 +17,12 @@ function App() {
         <Switch>
           <Route exact path="/login">
             <Login/>
+          </Route>
+          <Route exact path="/users">
+            <Users/>
+          </Route>
+          <Route exact path="/user/:id/:greet">
+            <Profile/>
           </Route>
         </Switch>
       </Router>

@@ -42,10 +42,10 @@ const Login = () => {
                 confirmButtonText: 'Cool'
             })
         } catch(err) {
-            console.log("🚀 ~ file: Login.jsx ~ line 38 ~ createUser ~ err", err.response.data)
+            console.log("🚀 ~ file: Login.jsx ~ line 38 ~ createUser ~ err", err.response.data.errors)
             Swal.fire({
                 title: 'Error!',
-                text: `${err.response.data.error.message}`,
+                html: `<ul>${err.response.data.errors.map(error => (`<li>${error}</li>`))}</ul>`,
                 icon: 'error',
                 confirmButtonText: 'Not Cool'
             })

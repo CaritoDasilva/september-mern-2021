@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Debe ingresar una contraseña']
+    },
+    profile_pic: {
+        type: String,
+        required: [true, 'Debe ingresar una foto de perfil']
     }
 }, {timestamps: true});
 

@@ -1,0 +1,41 @@
+@import 'antd/dist/antd.css';
+
+.App {
+  text-align: center;
+  /* display: flex;
+  justify-content: center; */
+  ul {
+    list-style-type: none;
+  }
+  .onlineIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.swal2-html-container {
+  ul {
+    list-style-type: none;
+  }
+
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 5%;
+}
+
+td, th {
+  img {
+    width: 100px;
+  }
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+// tr:nth-child(even) {
+//   background-color: #dddddd;
+// }
