@@ -28,6 +28,10 @@ const Login = () => {
             .equals([Yup.ref('password'), null], 'Contraseñas deben coincidir')
             .required('Este campo es requerido'),
         
+        profile_pic: Yup.string()
+            .min(2, 'Foto debe tener un mínimo de dos caracteres')
+            .required('Este campo es requerido'),
+        
     });
 
     const createUser = async (values) => {
@@ -63,7 +67,8 @@ const Login = () => {
                         email: '',
                         age: '',
                         password: '',
-                        confirmPass: ''
+                        confirmPass: '',
+                        profile_pic: ''
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={createUser}
@@ -87,7 +92,9 @@ const Login = () => {
                             <label htmlFor="confirmPass">Confirmar Contraseña</label>
                             <Field name="confirmPass" type="password" />
                             {errors.confirmPass && touched.confirmPass && <div className={styles.errors}>{errors.confirmPass}</div>}
-
+                            <label htmlFor="profile_pic">Foto Perfil</label>
+                            <Field name="profile_pic" type="text" />
+                            {errors.profile_pic && touched.profile_pic && <div className={styles.errors}>{errors.profile_pic}</div>}
                             <button type="submit">Submit</button>
                         </Form>
                     )}

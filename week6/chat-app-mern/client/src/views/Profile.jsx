@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from './Profile.module.scss';
 
@@ -31,7 +31,7 @@ const Profile = () => {
 
             </div>
             <h3>Mi edad es {user?.age}</h3>
-            <h1>{greet}</h1>
+            <Link to={`/create-profile/${user?._id}`}>Crear mi Perfil</Link>
         </div>
     )
 }

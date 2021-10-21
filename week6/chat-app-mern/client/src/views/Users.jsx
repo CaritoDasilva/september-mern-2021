@@ -8,6 +8,32 @@ const Users = () => {
     const [usersList, setUsersList] = useState([]);
     const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
     const [isLoading, setIsLoading] = useState(true)
+
+    const getAllUsers = async () => {
+        try {
+            const users = await axios.get('http://localhost:8080/api/users');
+            console.log("🚀 ~ file: Users.jsx ~ line 10 ~ getAllUsers ~ users", users)
+            setUsersList(users.data.usersList);
+            setIsLoading(false);
+        } catch (err) {
+            console.log("🚀 ~ file: Users.jsx ~ line 14 ~ getAllUsers ~ err", err)
+
+        }
+
+    }
+
+    const deleteUser = async (id) => {
+        try {
+            const usersUpdated = await axios.delete(`http://localhost:8080/api/users/${id}`);
+            console.log("🚀 ~ file: Users.jsx ~ line 28 ~ deleteUser ~ usersUpdated", usersUpdated)
+            getAllUsers();
+        } catch(err) {
+            console.log("🚀 ~ file: Users.jsx ~ line 31 ~ deleteUser ~ err", err)
+            
+        }
+    }
+
+
     const columns = [
         {
             title: 'Nombre',
@@ -32,8 +58,8 @@ const Users = () => {
             dataIndex: 'actions',
             key: 'actions',
             render: (text, record) => <Space size="middle">
-                    <Button>Eliminar</Button>
-                    <Button>Editar</Button>
+                    <Button onClick={() => deleteUser(record.key)}>Eliminar</Button>
+                    <Link to={`/create-profile/${record.key}`}>Editar</Link>
                 </Space>
         },
     ];
@@ -47,18 +73,7 @@ const Users = () => {
         }
     ))
 
-    const getAllUsers = async () => {
-        try {
-            const users = await axios.get('http://localhost:8080/api/users');
-            console.log("🚀 ~ file: Users.jsx ~ line 10 ~ getAllUsers ~ users", users)
-            setUsersList(users.data.usersList);
-            setIsLoading(false);
-        } catch(err) {
-            console.log("🚀 ~ file: Users.jsx ~ line 14 ~ getAllUsers ~ err", err)
-
-        }
-
-    }
+    
 
     useEffect(() => {
         setTimeout(function () { 

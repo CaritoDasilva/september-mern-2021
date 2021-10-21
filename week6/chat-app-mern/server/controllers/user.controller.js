@@ -35,3 +35,25 @@ module.exports.getOneUser = async (req, res) => {
         return res.status(500).json({error: err});
     }
 }
+
+module.exports.deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedUser = await User.deleteOne({_id: id});
+        return res.json({msg: 'Se ha borrado usuario exitosamente', user: deletedUser});
+
+    } catch(err) {
+        return res.status(500).json({error: err});         
+    }
+
+}
+
+module.exports.updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedUser = await User.findOneAndUpdate({_id: id}, req.body, {new: true});
+        return res.json({msg: 'Se ha actualizado correctamente', updatedUser })
+    } catch(err) {
+        return res.status(500).json({error: err});
+    }
+}

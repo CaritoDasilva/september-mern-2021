@@ -26,7 +26,16 @@ const UserSchema = new mongoose.Schema({
     profile_pic: {
         type: String,
         required: [true, 'Debe ingresar una foto de perfil']
-    }
+    },
+    status: {
+        type: String,
+        minlength: [3, 'No puedes tener un status tan corto']
+    },
+    description: {
+        type: String,
+        minlength: [3, 'No puedes tener una descripción tan corta, sé creativ@']
+    },
+
 }, {timestamps: true});
 
 const User = mongoose.model('User', UserSchema);

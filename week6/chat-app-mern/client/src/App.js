@@ -9,6 +9,7 @@ import {
 import Login from './views/Login';
 import Users from './views/Users';
 import Profile from './views/Profile';
+import CreateProfile from './views/CreateProfile';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route exact path="/user/:id">
             <Profile/>
+          </Route>
+          <Route exact path="/create-profile/:id">
+            <CreateProfile/>
           </Route>
         </Switch>
       </Router>
