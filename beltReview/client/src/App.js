@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import NewProperty from './views/NewProperty';
 import PropertiesList from './views/PropertiesList';
+import DetailProperty from './views/DetailProperty';
 
 
 function App() {
@@ -18,6 +19,12 @@ function App() {
           </Route>
           <Route exact path="/propiedades">
             <PropertiesList/>
+          </Route>
+          <Route exact path="/ver-propiedad/:id">
+            <DetailProperty/>
+          </Route>
+          <Route exact path="/modificar-propiedad/:id">
+            <NewProperty/>
           </Route>
         </Switch>
       </Router>

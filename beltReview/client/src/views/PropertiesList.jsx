@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from './PropertiesList.module.scss';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { changePropertyFromService } from "../services/propertyServices";
 
 const PropertiesList = () => {
     const [list, setList] = useState([]);
+    const history = useHistory()
 
     const getProperties = async () => {
         try {
@@ -34,17 +37,13 @@ const PropertiesList = () => {
     }
 
     const changeStatus = async (property, isSold) => {
-        try {
-            const updatedProperty = { ...property, isSold: isSold}
-            console.log('value', updatedProperty);
-            await axios.put(`http://localhost:8000/api/properties/update/${property._id}`, updatedProperty);
-            getProperties();
+        const updatedProperty = { ...property, isSold: isSold }
+        await changePropertyFromService(updatedProperty);
+        getProperties();
+    }
 
-        } catch(err) {
-            console.log("🚀 ~ file: PropertiesList.jsx ~ line 43 ~ changeStatus ~ err", err)
-
-        }
-
+    const goToPropertyDetail = (id) => {
+        history.push(`/ver-propiedad/${id}`);
     }
 
     return (
@@ -65,7 +64,7 @@ const PropertiesList = () => {
                                 onChange={(e) => changeStatus(property, e.target.checked)}
                             />
                         </Form>
-
+                        <Button variant="info" onClick={() => goToPropertyDetail(property._id)}>Ver detalle</Button>
                         <Button variant="danger" onClick={() => deleteProperty(property._id)}>Eliminar propiedad</Button>
                     </div>
                 )) }

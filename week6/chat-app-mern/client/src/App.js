@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.scss';
 import {
@@ -10,8 +11,15 @@ import Login from './views/Login';
 import Users from './views/Users';
 import Profile from './views/Profile';
 import CreateProfile from './views/CreateProfile';
+import io from 'socket.io-client';
 
 function App() {
+  const [socket] = useState(() => io(':8000'));
+
+  useEffect(() => {
+    socket.on("from-server", data => console.log('data', data));
+  }, [socket])
+
   return (
     <div className="App">
       <Router>

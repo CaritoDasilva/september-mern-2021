@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const port = 8080;
+const cookieParser = require('cookie-parser');
+
+const { socketEvents } = require('./server/controllers/sockets.controllers');
+
+app.use(cookieParser())
 app.use(cors()) 
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
@@ -14,4 +19,6 @@ usersRoutes(app);
 
 
 
-app.listen(port, () => console.log('Im listening so cool!'))
+const server = app.listen(port, () => console.log('Im listening so cool!'));
+
+socketEvents(server, cors); 
