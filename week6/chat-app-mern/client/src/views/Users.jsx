@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Table, Space, Spin, Button } from 'antd';
 import { CheckCircleTwoTone, LoadingOutlined, CloseSquareTwoTone } from '@ant-design/icons';
 import { Link } from "react-router-dom";
+import { SocketContext } from "../contexts/SocketContext";
 
 const Users = () => {
-    const [usersList, setUsersList] = useState([]);
+
+    const { users } = useContext(SocketContext)
+
+    // const [usersList, setUsersList] = useState([]);
     const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
     const [isLoading, setIsLoading] = useState(true)
 
-    const getAllUsers = async () => {
-        try {
-            const users = await axios.get('http://localhost:8080/api/users');
-            console.log("🚀 ~ file: Users.jsx ~ line 10 ~ getAllUsers ~ users", users)
-            setUsersList(users.data.usersList);
-            setIsLoading(false);
-        } catch (err) {
-            console.log("🚀 ~ file: Users.jsx ~ line 14 ~ getAllUsers ~ err", err)
+    // const getAllUsers = async () => {
+    //     try {
+    //         const users = await axios.get('http://localhost:8080/api/users');
+    //         console.log("🚀 ~ file: Users.jsx ~ line 10 ~ getAllUsers ~ users", users)
+    //         setUsersList(users.data.usersList);
+    //         setIsLoading(false);
+    //     } catch (err) {
+    //         console.log("🚀 ~ file: Users.jsx ~ line 14 ~ getAllUsers ~ err", err)
 
-        }
+    //     }
 
-    }
+    // }
 
-    const deleteUser = async (id) => {
-        try {
-            const usersUpdated = await axios.delete(`http://localhost:8080/api/users/${id}`);
-            console.log("🚀 ~ file: Users.jsx ~ line 28 ~ deleteUser ~ usersUpdated", usersUpdated)
-            getAllUsers();
-        } catch(err) {
-            console.log("🚀 ~ file: Users.jsx ~ line 31 ~ deleteUser ~ err", err)
+    // const deleteUser = async (id) => {
+    //     try {
+    //         const usersUpdated = await axios.delete(`http://localhost:8080/api/users/${id}`);
+    //         console.log("🚀 ~ file: Users.jsx ~ line 28 ~ deleteUser ~ usersUpdated", usersUpdated)
+    //         getAllUsers();
+    //     } catch(err) {
+    //         console.log("🚀 ~ file: Users.jsx ~ line 31 ~ deleteUser ~ err", err)
             
-        }
-    }
+    //     }
+    // }
 
 
     const columns = [
@@ -58,13 +62,13 @@ const Users = () => {
             dataIndex: 'actions',
             key: 'actions',
             render: (text, record) => <Space size="middle">
-                    <Button onClick={() => deleteUser(record.key)}>Eliminar</Button>
+                    {/* <Button onClick={() => deleteUser(record.key)}>Eliminar</Button> */}
                     <Link to={`/create-profile/${record.key}`}>Editar</Link>
                 </Space>
         },
     ];
 
-    const data = usersList?.map(user => (
+    const data = users?.map(user => (
         {
             key: user._id,
             name: user.fullName,
@@ -76,9 +80,11 @@ const Users = () => {
     
 
     useEffect(() => {
-        setTimeout(function () { 
-            getAllUsers();
-        }, 1000);
+        console.log("🚀 ~ file: Users.jsx ~ line 11 ~ Users ~ users", users)
+
+        // setTimeout(function () { 
+        //     getAllUsers();
+        // }, 1000);
         
     }, []);
 
@@ -87,7 +93,7 @@ const Users = () => {
 
     return (
         <div>
-            {!isLoading ? (
+            {isLoading ? (
                 <div>
                     <h1>Lista de Usuarios</h1>
                     <Table columns={columns} dataSource={data}  />
